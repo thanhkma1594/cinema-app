@@ -1,12 +1,17 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
-import { CharacterStoreModel } from "../character-store/character-store"
+import { ComingSoonMovieStoreModel } from "../coming-soon-movies-store/coming-soon-movies-store"
+import { DetailMovieStoreModel } from "../detail-movie-store/detail-movie-store"
+import { NowShowingMoviesStore } from "../now-showing-movies-store/now-showing-movies-store"
 
 /**
  * A RootStore model.
  */
 // prettier-ignore
 export const RootStoreModel = types.model("RootStore").props({
-  characterStore: types.optional(CharacterStoreModel, {} as any),
+  nowShowingMoviesStore: types.optional(NowShowingMoviesStore, {} as any),
+  comingSoonMoviesStore: types.optional(ComingSoonMovieStoreModel, {} as any),
+  detailMoviesStore: types.optional(DetailMovieStoreModel, {} as any),
+
 })
 
 /**

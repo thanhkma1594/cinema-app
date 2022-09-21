@@ -8,8 +8,8 @@ import React from "react"
 import { useColorScheme } from "react-native"
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens"
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
+import { DetailMovies, HomeScreen } from "../screens"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -24,26 +24,28 @@ import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
 export type NavigatorParamList = {
-  welcome: undefined
-  demo: undefined
-  demoList: undefined
+  home: undefined
+  detailMovies: undefined
+  // demo: undefined
+  // demoList: undefined
   // 🔥 Your screens go here
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<NavigatorParamList>()
 
-const AppStack = () => {
+const AppStack = (props) => {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="welcome"
+      initialRouteName="home"
     >
-      <Stack.Screen name="welcome" component={WelcomeScreen} />
-      <Stack.Screen name="demo" component={DemoScreen} />
-      <Stack.Screen name="demoList" component={DemoListScreen} />
+      <Stack.Screen name="home" component={HomeScreen} {...props} />
+      <Stack.Screen name="detailMovies" component={DetailMovies} {...props} />
+      {/* <Stack.Screen name="demo" component={DemoScreen} />
+      <Stack.Screen name="demoList" component={DemoListScreen} /> */}
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )
@@ -60,7 +62,7 @@ export const AppNavigator = (props: NavigationProps) => {
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
       {...props}
     >
-      <AppStack />
+      <AppStack {...props} />
     </NavigationContainer>
   )
 }
@@ -76,5 +78,5 @@ AppNavigator.displayName = "AppNavigator"
  *
  * `canExit` is used in ./app/app.tsx in the `useBackButtonHandler` hook.
  */
-const exitRoutes = ["welcome"]
+const exitRoutes = ["home"]
 export const canExit = (routeName: string) => exitRoutes.includes(routeName)
